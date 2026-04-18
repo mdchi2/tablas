@@ -29,68 +29,15 @@ text-align: center;
 @media (max-width: 480px) {
 .container {
 max-width: 100%;
-padding: 14px 12px; /* menos padding vertical */
-margin: 8px 0;
-transform: scale(0.97); /* leve reducción general */
-}
-h1 {
-font-size: 1.85em;
-margin: 4px 0 6px 0;
-}
-.subtitle {
-font-size: 0.98em;
-margin-bottom: 12px;
-}
-.level-selector {
-margin: 10px 0 14px 0;
-}
-button.level {
-padding: 9px 18px;
-font-size: 1.02em;
-margin: 0 5px;
-}
-.score {
-font-size: 1.35em;
+padding: 14px 12px;
 margin: 8px 0;
 }
-.progress {
-font-size: 1.1em;
-margin-bottom: 14px;
-}
-.question {
-font-size: 2.05em;
-margin: 14px 0 18px 0;
-min-height: 58px;
-}
-.options {
-gap: 10px;
-margin: 16px 0 18px 0;
-}
-button.option {
-padding: 13px 8px;
-font-size: 1.32em;
-min-height: 58px; /* reducido */
-}
-.result {
-font-size: 1.45em;
-margin: 12px 0;
-min-height: 42px;
-}
-.reset-btn {
-margin-top: 12px;
-padding: 11px 28px;
-font-size: 1.02em;
+button.level, button.reset-btn {
+padding: 8px 14px;
+font-size: 0.95em;
+margin: 4px 3px;
 }
 }
-/* Ajuste para celulares muy pequeños */
-@media (max-width: 380px) {
-.container {
-padding: 12px 10px;
-}
-h1 { font-size: 1.75em; }
-.question { font-size: 1.95em; }
-}
-/* Estilos normales (desktop/tablet) */
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
@@ -104,40 +51,46 @@ margin-bottom: 18px;
 }
 .level-selector {
 margin: 15px 0 22px 0;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 8px;
 }
-button.level {
-padding: 12px 24px;
-margin: 0 8px;
-font-size: 1.12em;
+button.level, button.reset-btn {
+padding: 10px 18px;
+font-size: 1.0em;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
 border-radius: 10px;
 cursor: pointer;
 transition: all 0.3s;
+min-width: 110px;
 }
-button.level:hover, button.level.active {
+button.level:hover, button.level.active,
+button.reset-btn:hover {
 background: #00ff9d;
 color: #000;
 box-shadow: 0 0 20px #00ff9d;
 }
+/* ==================== CAMBIOS SOLICITADOS ==================== */
 .score {
-font-size: 1.5em;
-margin: 12px 0;
+font-size: 1.35em; /* más pequeño */
+margin: 8px 0;
 text-shadow: 0 0 10px #00ff9d;
 }
 .progress {
-font-size: 1.22em;
+font-size: 1.15em;
 color: #00cc7a;
-margin-bottom: 22px;
+margin-bottom: 18px;
 }
 .question {
-font-size: 2.35em;
-margin: 22px 0 28px 0;
+font-size: 2.05em; /* más pequeño */
+margin: 18px 0 24px 0;
 font-weight: bold;
 text-shadow: 0 0 18px #00ff9d;
-min-height: 72px;
-line-height: 1.15;
+min-height: 65px;
+line-height: 1.1; /* menos interlineado */
 }
 .options {
 display: grid;
@@ -163,49 +116,32 @@ color: #000;
 transform: scale(1.05);
 box-shadow: 0 0 22px #00ff9d;
 }
-.correct {
-background: #00ff9d !important;
-color: #000 !important;
-}
-.incorrect {
-background: #ff0044 !important;
-color: white !important;
-}
+.correct { background: #00ff9d !important; color: #000 !important; }
+.incorrect { background: #ff0044 !important; color: white !important; }
 .result {
 font-size: 1.58em;
 margin: 18px 0;
 min-height: 52px;
 text-shadow: 0 0 12px #00ff9d;
 }
-.reset-btn {
-margin-top: 18px;
-padding: 13px 32px;
-background: transparent;
-color: #00ff9d;
-border: 2px solid #00ff9d;
-border-radius: 10px;
-font-size: 1.08em;
-cursor: pointer;
-}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>NEON MULTIPLY</h1>
-<p class="subtitle">Tablas de Multiplicar</p>
+<h1>TABLAS DE MULTIPLICAR</h1>
+<p class="subtitle">By Mariano Damian Ver 1.0</p>
 <div class="level-selector">
 <button class="level active" id="btn-easy" onclick="setDifficulty(1)">FÁCIL (1-5)</button>
 <button class="level" id="btn-hard" onclick="setDifficulty(2)">DIFÍCIL (1-10)</button>
+<button class="reset-btn" onclick="reiniciarJuego()">REINICIAR</button>
 </div>
 <div class="score">Puntuación: <span id="score">0</span> / <span id="total">0</span></div>
 <div class="progress">Pregunta <span id="current">1</span> de 10</div>
 <div class="question" id="question">¿Cuánto es 4 × 3?</div>
 <div class="options" id="options"></div>
 <div class="result" id="result"></div>
-<button class="reset-btn" onclick="reiniciarJuego()">REINICIAR JUEGO</button>
 </div>
 <script>
-// (El script se mantiene igual)
 let score = 0;
 let currentQuestion = 0;
 let totalQuestions = 10;
