@@ -17,7 +17,7 @@ justify-content: center;
 }
 .container {
 width: 100%;
-max-width: 520px; /* ← 30% más ancho (antes 400px) */
+max-width: 520px;
 background: #111111;
 border: 2px solid #00ff9d;
 border-radius: 18px;
@@ -25,6 +25,72 @@ padding: 22px 20px;
 box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
 text-align: center;
 }
+/* ==================== AJUSTE PARA CELULARES ==================== */
+@media (max-width: 480px) {
+.container {
+max-width: 100%;
+padding: 14px 12px; /* menos padding vertical */
+margin: 8px 0;
+transform: scale(0.97); /* leve reducción general */
+}
+h1 {
+font-size: 1.85em;
+margin: 4px 0 6px 0;
+}
+.subtitle {
+font-size: 0.98em;
+margin-bottom: 12px;
+}
+.level-selector {
+margin: 10px 0 14px 0;
+}
+button.level {
+padding: 9px 18px;
+font-size: 1.02em;
+margin: 0 5px;
+}
+.score {
+font-size: 1.35em;
+margin: 8px 0;
+}
+.progress {
+font-size: 1.1em;
+margin-bottom: 14px;
+}
+.question {
+font-size: 2.05em;
+margin: 14px 0 18px 0;
+min-height: 58px;
+}
+.options {
+gap: 10px;
+margin: 16px 0 18px 0;
+}
+button.option {
+padding: 13px 8px;
+font-size: 1.32em;
+min-height: 58px; /* reducido */
+}
+.result {
+font-size: 1.45em;
+margin: 12px 0;
+min-height: 42px;
+}
+.reset-btn {
+margin-top: 12px;
+padding: 11px 28px;
+font-size: 1.02em;
+}
+}
+/* Ajuste para celulares muy pequeños */
+@media (max-width: 380px) {
+.container {
+padding: 12px 10px;
+}
+h1 { font-size: 1.75em; }
+.question { font-size: 1.95em; }
+}
+/* Estilos normales (desktop/tablet) */
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
@@ -97,8 +163,14 @@ color: #000;
 transform: scale(1.05);
 box-shadow: 0 0 22px #00ff9d;
 }
-.correct { background: #00ff9d !important; color: #000 !important; }
-.incorrect { background: #ff0044 !important; color: white !important; }
+.correct {
+background: #00ff9d !important;
+color: #000 !important;
+}
+.incorrect {
+background: #ff0044 !important;
+color: white !important;
+}
 .result {
 font-size: 1.58em;
 margin: 18px 0;
@@ -114,15 +186,6 @@ border: 2px solid #00ff9d;
 border-radius: 10px;
 font-size: 1.08em;
 cursor: pointer;
-}
-/* Ajuste para celulares muy pequeños */
-@media (max-width: 380px) {
-.container {
-max-width: 100%;
-padding: 18px 15px;
-}
-h1 { font-size: 2.0em; }
-.question { font-size: 2.15em; }
 }
 </style>
 </head>
@@ -142,12 +205,13 @@ h1 { font-size: 2.0em; }
 <button class="reset-btn" onclick="reiniciarJuego()">REINICIAR JUEGO</button>
 </div>
 <script>
+// (El script se mantiene igual)
 let score = 0;
 let currentQuestion = 0;
 let totalQuestions = 10;
 let correctAnswer = 0;
 let answered = false;
-let difficulty = 1; // 1 = Fácil (1-5), 2 = Difícil (1-10)
+let difficulty = 1;
 function setDifficulty(nivel) {
 difficulty = nivel;
 document.getElementById("btn-easy").classList.toggle("active", nivel === 1);
@@ -197,9 +261,7 @@ document.getElementById("result").innerHTML = `<span style="color:#00ff9d">¡COR
 boton.classList.add("incorrect");
 document.getElementById("result").innerHTML = `<span style="color:#ff0044">Incorrecto ❌ La respuesta era <strong>${correctAnswer}</strong></span>`;
 botones.forEach(btn => {
-if (parseInt(btn.textContent) === correctAnswer) {
-btn.classList.add("correct");
-}
+if (parseInt(btn.textContent) === correctAnswer) btn.classList.add("correct");
 });
 }
 setTimeout(() => {
