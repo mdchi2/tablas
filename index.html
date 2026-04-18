@@ -17,18 +17,18 @@ justify-content: center;
 }
 .container {
 width: 100%;
-max-width: 400px;
+max-width: 520px; /* ← 30% más ancho (antes 400px) */
 background: #111111;
 border: 2px solid #00ff9d;
 border-radius: 18px;
-padding: 20px 18px;
+padding: 22px 20px;
 box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
 text-align: center;
 }
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
-font-size: 2.1em;
+font-size: 2.2em;
 margin: 5px 0 8px 0;
 }
 .subtitle {
@@ -37,12 +37,12 @@ font-size: 1.05em;
 margin-bottom: 18px;
 }
 .level-selector {
-margin: 15px 0 20px 0;
+margin: 15px 0 22px 0;
 }
 button.level {
-padding: 12px 22px;
-margin: 0 6px;
-font-size: 1.1em;
+padding: 12px 24px;
+margin: 0 8px;
+font-size: 1.12em;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
@@ -53,74 +53,76 @@ transition: all 0.3s;
 button.level:hover, button.level.active {
 background: #00ff9d;
 color: #000;
-box-shadow: 0 0 18px #00ff9d;
+box-shadow: 0 0 20px #00ff9d;
 }
 .score {
-font-size: 1.45em;
+font-size: 1.5em;
 margin: 12px 0;
 text-shadow: 0 0 10px #00ff9d;
 }
 .progress {
-font-size: 1.2em;
+font-size: 1.22em;
 color: #00cc7a;
-margin-bottom: 20px;
+margin-bottom: 22px;
 }
 .question {
-font-size: 2.3em;
-margin: 20px 0 25px 0;
+font-size: 2.35em;
+margin: 22px 0 28px 0;
 font-weight: bold;
 text-shadow: 0 0 18px #00ff9d;
-min-height: 70px;
+min-height: 72px;
 line-height: 1.15;
 }
 .options {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
-gap: 12px;
-margin: 20px 0 25px 0;
+gap: 13px;
+margin: 22px 0 25px 0;
 }
 button.option {
-padding: 16px 8px;
-font-size: 1.45em;
+padding: 17px 10px;
+font-size: 1.48em;
 background: #1a1a1a;
 color: #00ff9d;
 border: 2px solid #00ff9d;
-border-radius: 10px;
+border-radius: 11px;
 cursor: pointer;
 transition: all 0.3s;
 text-shadow: 0 0 6px #00ff9d;
-min-height: 68px;
+min-height: 70px;
 }
 button.option:hover {
 background: #00ff9d;
 color: #000;
-transform: scale(1.06);
-box-shadow: 0 0 20px #00ff9d;
+transform: scale(1.05);
+box-shadow: 0 0 22px #00ff9d;
 }
 .correct { background: #00ff9d !important; color: #000 !important; }
 .incorrect { background: #ff0044 !important; color: white !important; }
 .result {
-font-size: 1.55em;
-margin: 15px 0;
-min-height: 50px;
+font-size: 1.58em;
+margin: 18px 0;
+min-height: 52px;
 text-shadow: 0 0 12px #00ff9d;
 }
 .reset-btn {
-margin-top: 15px;
-padding: 12px 30px;
+margin-top: 18px;
+padding: 13px 32px;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
 border-radius: 10px;
-font-size: 1.05em;
+font-size: 1.08em;
 cursor: pointer;
 }
-/* Ajuste extra para celulares pequeños */
+/* Ajuste para celulares muy pequeños */
 @media (max-width: 380px) {
-.container { padding: 18px 15px; }
-h1 { font-size: 1.95em; }
-.question { font-size: 2.1em; }
-button.option { font-size: 1.35em; padding: 14px 6px; }
+.container {
+max-width: 100%;
+padding: 18px 15px;
+}
+h1 { font-size: 2.0em; }
+.question { font-size: 2.15em; }
 }
 </style>
 </head>
@@ -161,7 +163,6 @@ const a = Math.floor(Math.random() * maxTabla) + 1;
 const b = Math.floor(Math.random() * maxTabla) + 1;
 correctAnswer = a * b;
 document.getElementById("question").textContent = `¿Cuánto es ${a} × ${b}?`;
-// Generar 6 opciones (respuestas entre 1 y maxRespuesta)
 let opciones = [correctAnswer];
 while (opciones.length < 6) {
 let falsa = Math.floor(Math.random() * maxRespuesta) + 1;
@@ -201,7 +202,6 @@ btn.classList.add("correct");
 }
 });
 }
-// Auto-avanzar después de 1.1 segundos (más fluido)
 setTimeout(() => {
 if (currentQuestion < totalQuestions) {
 generarPregunta();
@@ -223,7 +223,6 @@ document.getElementById("score").textContent = "0";
 document.getElementById("total").textContent = "0";
 generarPregunta();
 }
-// Iniciar
 window.onload = generarPregunta;
 </script>
 </body></html>
