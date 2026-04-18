@@ -29,7 +29,7 @@ position: relative;
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
-font-size: 2.0em; /* Título más pequeño */
+font-size: 2.0em;
 margin: 6px 0 8px 0;
 }
 .subtitle {
@@ -44,7 +44,6 @@ justify-content: center;
 flex-wrap: wrap;
 gap: 5px;
 }
-/* Botones FÁCIL, DIFÍCIL y REINICIAR - aún más pequeños */
 button.level, button.reset-btn {
 padding: 6px 12px;
 font-size: 0.85em;
@@ -80,7 +79,6 @@ text-shadow: 0 0 18px #00ff9d;
 min-height: 65px;
 line-height: 1.1;
 }
-/* Botones de respuestas aún más pequeños */
 .options {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
@@ -89,7 +87,7 @@ margin: 18px 0 22px 0;
 }
 button.option {
 padding: 12px 6px;
-font-size: 1.22em; /* más pequeño */
+font-size: 1.22em;
 background: #1a1a1a;
 color: #00ff9d;
 border: 2px solid #00ff9d;
@@ -113,8 +111,8 @@ margin: 16px 0;
 min-height: 48px;
 text-shadow: 0 0 12px #00ff9d;
 }
-/* PIKACHU EN EL CENTRO DE LA PANTALLA */
-#pikachu-overlay {
+/* Pokémons de recompensa */
+#pokemon-overlay {
 display: none;
 position: fixed;
 top: 50%;
@@ -123,9 +121,9 @@ transform: translate(-50%, -50%);
 z-index: 1000;
 width: 260px;
 filter: drop-shadow(0 0 30px #ffff00);
-animation: pikachuPop 0.7s ease;
+animation: pokemonPop 0.7s ease;
 }
-@keyframes pikachuPop {
+@keyframes pokemonPop {
 0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
 70% { transform: translate(-50%, -50%) scale(1.1); }
 100% { transform: translate(-50%, -50%) scale(1); }
@@ -135,7 +133,7 @@ animation: pikachuPop 0.7s ease;
 <body>
 <div class="container">
 <h1>TABLAS</h1>
-<p class="subtitle">by Mariano Damian Ver 1.01</p>
+<p class="subtitle">by Mariano Damian Ver 2.02</p>
 <div class="level-selector">
 <button class="level active" id="btn-easy" onclick="setDifficulty(1)">FÁCIL (1-5)</button>
 <button class="level" id="btn-hard" onclick="setDifficulty(2)">DIFÍCIL (1-10)</button>
@@ -147,7 +145,7 @@ animation: pikachuPop 0.7s ease;
 <div class="options" id="options"></div>
 <div class="result" id="result"></div>
 </div>
-<!-- Pikachu en el centro de la pantalla --><img id="pikachu-overlay" src="pokemon.jpg" alt="¡Correcto!">
+<!-- Pokémons de recompensa (aparecen aleatoriamente al acertar) --><img id="pokemon-overlay" src="" alt="¡Correcto!">
 
 <script>
 let score = 0;
@@ -156,6 +154,14 @@ let totalQuestions = 10;
 let correctAnswer = 0;
 let answered = false;
 let difficulty = 1;
+// === LISTA DE POKÉMONS (agrega aquí más si quieres) ===
+const pokemonList = [
+"pokemon.jpg", // Pikachu original
+"pokemon2.jpg", // Bulbasaur
+"pokemon3.jpg", // Blastoise + Squirtle
+"pokemon4.jpg", // Charizard
+"pokemon5.jpg" // Pokémon verde (nuevo)
+];
 function setDifficulty(nivel) {
 difficulty = nivel;
 document.getElementById("btn-easy").classList.toggle("active", nivel === 1);
@@ -165,7 +171,7 @@ reiniciarJuego();
 function generarPregunta() {
 answered = false;
 document.getElementById("result").innerHTML = "";
-document.getElementById("pikachu-overlay").style.display = "none";
+document.getElementById("pokemon-overlay").style.display = "none";
 let maxTabla = difficulty === 1 ? 5 : 10;
 let maxRespuesta = difficulty === 1 ? 50 : 100;
 const a = Math.floor(Math.random() * maxTabla) + 1;
@@ -191,7 +197,7 @@ optionsDiv.appendChild(btn);
 });
 currentQuestion++;
 document.getElementById("current").textContent = currentQuestion;
-document.getElementById("total").textContent = currentQuestion;
+document.getElementById("total").textContent = totalQuestions;
 }
 function verificarRespuesta(respuesta, boton) {
 if (answered) return;
@@ -201,8 +207,11 @@ if (respuesta === correctAnswer) {
 score++;
 document.getElementById("score").textContent = score;
 boton.classList.add("correct");
-// Mostrar Pikachu en el centro
-document.getElementById("pikachu-overlay").style.display = "block";
+// Mostrar Pokémon aleatorio
+const randomPokemon = pokemonList[Math.floor(Math.random() * pokemonList.length)];
+const overlay = document.getElementById("pokemon-overlay");
+overlay.src = randomPokemon;
+overlay.style.display = "block";
 document.getElementById("result").innerHTML = `<span style="color:#00ff9d">¡CORRECTO! ✅</span>`;
 } else {
 boton.classList.add("incorrect");
@@ -212,7 +221,7 @@ if (parseInt(btn.textContent) === correctAnswer) btn.classList.add("correct");
 });
 }
 setTimeout(() => {
-document.getElementById("pikachu-overlay").style.display = "none";
+document.getElementById("pokemon-overlay").style.display = "none";
 if (currentQuestion < totalQuestions) {
 generarPregunta();
 } else {
@@ -231,7 +240,7 @@ score = 0;
 currentQuestion = 0;
 document.getElementById("score").textContent = "0";
 document.getElementById("total").textContent = "0";
-document.getElementById("pikachu-overlay").style.display = "none";
+document.getElementById("pokemon-overlay").style.display = "none";
 generarPregunta();
 }
 window.onload = generarPregunta;
