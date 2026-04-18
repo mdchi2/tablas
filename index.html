@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tablas de Multiplicar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tablas</title>
 
 <style>
 body {
@@ -21,47 +21,40 @@ max-width: 520px;
 background: #111111;
 border: 2px solid #00ff9d;
 border-radius: 18px;
-padding: 22px 20px;
+padding: 20px 18px;
 box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
 text-align: center;
-}
-/* ==================== AJUSTE PARA CELULARES ==================== */
-@media (max-width: 480px) {
-.container {
-max-width: 100%;
-padding: 14px 12px;
-margin: 8px 0;
-}
+position: relative;
 }
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
-font-size: 2.4em;
-margin: 8px 0 10px 0;
+font-size: 2.0em; /* Título más pequeño */
+margin: 6px 0 8px 0;
 }
 .subtitle {
 color: #00cc7a;
 font-size: 1.0em;
-margin-bottom: 16px;
+margin-bottom: 14px;
 }
 .level-selector {
-margin: 12px 0 20px 0;
+margin: 10px 0 18px 0;
 display: flex;
 justify-content: center;
 flex-wrap: wrap;
-gap: 6px;
+gap: 5px;
 }
-/* Botones FÁCIL - DIFÍCIL - REINICIAR (más pequeños) */
+/* Botones FÁCIL, DIFÍCIL y REINICIAR - aún más pequeños */
 button.level, button.reset-btn {
-padding: 8px 14px;
-font-size: 0.92em;
+padding: 6px 12px;
+font-size: 0.85em;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
-border-radius: 9px;
+border-radius: 8px;
 cursor: pointer;
 transition: all 0.3s;
-min-width: 95px;
+min-width: 85px;
 }
 button.level:hover, button.level.active,
 button.reset-btn:hover {
@@ -87,24 +80,24 @@ text-shadow: 0 0 18px #00ff9d;
 min-height: 65px;
 line-height: 1.1;
 }
-/* Botones de respuestas (opciones) más pequeños */
+/* Botones de respuestas aún más pequeños */
 .options {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
-gap: 11px;
-margin: 20px 0 24px 0;
+gap: 10px;
+margin: 18px 0 22px 0;
 }
 button.option {
-padding: 14px 8px;
-font-size: 1.32em; /* letra más chica */
+padding: 12px 6px;
+font-size: 1.22em; /* más pequeño */
 background: #1a1a1a;
 color: #00ff9d;
 border: 2px solid #00ff9d;
-border-radius: 10px;
+border-radius: 9px;
 cursor: pointer;
 transition: all 0.3s;
 text-shadow: 0 0 6px #00ff9d;
-min-height: 58px;
+min-height: 52px;
 }
 button.option:hover {
 background: #00ff9d;
@@ -120,12 +113,29 @@ margin: 16px 0;
 min-height: 48px;
 text-shadow: 0 0 12px #00ff9d;
 }
+/* PIKACHU EN EL CENTRO DE LA PANTALLA */
+#pikachu-overlay {
+display: none;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1000;
+width: 260px;
+filter: drop-shadow(0 0 30px #ffff00);
+animation: pikachuPop 0.7s ease;
+}
+@keyframes pikachuPop {
+0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+70% { transform: translate(-50%, -50%) scale(1.1); }
+100% { transform: translate(-50%, -50%) scale(1); }
+}
 </style>
 </head>
 <body>
 <div class="container">
 <h1>TABLAS</h1>
-<p class="subtitle">By Mariano Damian Ver 1.0</p>
+<p class="subtitle">by Mariano Damian Ver 1.01</p>
 <div class="level-selector">
 <button class="level active" id="btn-easy" onclick="setDifficulty(1)">FÁCIL (1-5)</button>
 <button class="level" id="btn-hard" onclick="setDifficulty(2)">DIFÍCIL (1-10)</button>
@@ -137,6 +147,8 @@ text-shadow: 0 0 12px #00ff9d;
 <div class="options" id="options"></div>
 <div class="result" id="result"></div>
 </div>
+<!-- Pikachu en el centro de la pantalla --><img id="pikachu-overlay" src="pokemon.jpg" alt="¡Correcto!">
+
 <script>
 let score = 0;
 let currentQuestion = 0;
@@ -153,6 +165,7 @@ reiniciarJuego();
 function generarPregunta() {
 answered = false;
 document.getElementById("result").innerHTML = "";
+document.getElementById("pikachu-overlay").style.display = "none";
 let maxTabla = difficulty === 1 ? 5 : 10;
 let maxRespuesta = difficulty === 1 ? 50 : 100;
 const a = Math.floor(Math.random() * maxTabla) + 1;
@@ -188,6 +201,8 @@ if (respuesta === correctAnswer) {
 score++;
 document.getElementById("score").textContent = score;
 boton.classList.add("correct");
+// Mostrar Pikachu en el centro
+document.getElementById("pikachu-overlay").style.display = "block";
 document.getElementById("result").innerHTML = `<span style="color:#00ff9d">¡CORRECTO! ✅</span>`;
 } else {
 boton.classList.add("incorrect");
@@ -197,6 +212,7 @@ if (parseInt(btn.textContent) === correctAnswer) btn.classList.add("correct");
 });
 }
 setTimeout(() => {
+document.getElementById("pikachu-overlay").style.display = "none";
 if (currentQuestion < totalQuestions) {
 generarPregunta();
 } else {
@@ -208,13 +224,14 @@ document.getElementById("question").innerHTML = `
 `;
 document.getElementById("options").innerHTML = "";
 }
-}, 1100);
+}, 1600);
 }
 function reiniciarJuego() {
 score = 0;
 currentQuestion = 0;
 document.getElementById("score").textContent = "0";
 document.getElementById("total").textContent = "0";
+document.getElementById("pikachu-overlay").style.display = "none";
 generarPregunta();
 }
 window.onload = generarPregunta;
