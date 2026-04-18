@@ -9,7 +9,7 @@ font-family: 'Courier New', Courier, monospace;
 background: #0a0a0a;
 color: #00ff9d;
 margin: 0;
-padding: 15px;
+padding: 10px;
 min-height: 100vh;
 display: flex;
 align-items: center;
@@ -17,113 +17,117 @@ justify-content: center;
 }
 .container {
 width: 100%;
-max-width: 420px;
+max-width: 400px;
 background: #111111;
 border: 2px solid #00ff9d;
-border-radius: 20px;
-padding: 25px 20px;
-box-shadow: 0 0 40px rgba(0, 255, 157, 0.3);
+border-radius: 18px;
+padding: 20px 18px;
+box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
 text-align: center;
 }
 h1 {
 color: #00ff9d;
 text-shadow: 0 0 15px #00ff9d;
-font-size: 2.3em;
-margin: 0 0 8px 0;
+font-size: 2.1em;
+margin: 5px 0 8px 0;
 }
 .subtitle {
 color: #00cc7a;
-font-size: 1.1em;
-margin-bottom: 20px;
+font-size: 1.05em;
+margin-bottom: 18px;
 }
 .level-selector {
-margin: 20px 0 25px 0;
+margin: 15px 0 20px 0;
 }
 button.level {
-padding: 14px 25px;
-margin: 0 8px;
-font-size: 1.15em;
+padding: 12px 22px;
+margin: 0 6px;
+font-size: 1.1em;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
-border-radius: 12px;
+border-radius: 10px;
 cursor: pointer;
 transition: all 0.3s;
 }
 button.level:hover, button.level.active {
 background: #00ff9d;
 color: #000;
-box-shadow: 0 0 20px #00ff9d;
+box-shadow: 0 0 18px #00ff9d;
 }
 .score {
-font-size: 1.55em;
-margin: 15px 0;
+font-size: 1.45em;
+margin: 12px 0;
 text-shadow: 0 0 10px #00ff9d;
 }
 .progress {
-font-size: 1.25em;
+font-size: 1.2em;
 color: #00cc7a;
-margin-bottom: 25px;
+margin-bottom: 20px;
 }
 .question {
-font-size: 2.5em;
-margin: 30px 0;
+font-size: 2.3em;
+margin: 20px 0 25px 0;
 font-weight: bold;
-text-shadow: 0 0 20px #00ff9d;
-min-height: 85px;
-line-height: 1.2;
+text-shadow: 0 0 18px #00ff9d;
+min-height: 70px;
+line-height: 1.15;
 }
 .options {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
-gap: 14px;
-margin: 30px 0;
+gap: 12px;
+margin: 20px 0 25px 0;
 }
 button.option {
-padding: 20px 10px;
-font-size: 1.5em;
+padding: 16px 8px;
+font-size: 1.45em;
 background: #1a1a1a;
 color: #00ff9d;
 border: 2px solid #00ff9d;
-border-radius: 12px;
+border-radius: 10px;
 cursor: pointer;
 transition: all 0.3s;
-text-shadow: 0 0 8px #00ff9d;
-min-height: 78px;
-display: flex;
-align-items: center;
-justify-content: center;
+text-shadow: 0 0 6px #00ff9d;
+min-height: 68px;
 }
 button.option:hover {
 background: #00ff9d;
 color: #000;
-transform: scale(1.05);
-box-shadow: 0 0 25px #00ff9d;
+transform: scale(1.06);
+box-shadow: 0 0 20px #00ff9d;
 }
 .correct { background: #00ff9d !important; color: #000 !important; }
 .incorrect { background: #ff0044 !important; color: white !important; }
 .result {
-font-size: 1.65em;
-margin: 25px 0;
-min-height: 60px;
-text-shadow: 0 0 15px #00ff9d;
+font-size: 1.55em;
+margin: 15px 0;
+min-height: 50px;
+text-shadow: 0 0 12px #00ff9d;
 }
 .reset-btn {
-margin-top: 20px;
-padding: 14px 35px;
+margin-top: 15px;
+padding: 12px 30px;
 background: transparent;
 color: #00ff9d;
 border: 2px solid #00ff9d;
 border-radius: 10px;
-font-size: 1.1em;
+font-size: 1.05em;
 cursor: pointer;
+}
+/* Ajuste extra para celulares pequeños */
+@media (max-width: 380px) {
+.container { padding: 18px 15px; }
+h1 { font-size: 1.95em; }
+.question { font-size: 2.1em; }
+button.option { font-size: 1.35em; padding: 14px 6px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
 <h1>NEON MULTIPLY</h1>
-<p class="subtitle">Tablas de Multiplicar&nbsp;</p><p class="subtitle">by Mariano Damian</p>
+<p class="subtitle">Tablas de Multiplicar</p>
 <div class="level-selector">
 <button class="level active" id="btn-easy" onclick="setDifficulty(1)">FÁCIL (1-5)</button>
 <button class="level" id="btn-hard" onclick="setDifficulty(2)">DIFÍCIL (1-10)</button>
@@ -144,7 +148,6 @@ let answered = false;
 let difficulty = 1; // 1 = Fácil (1-5), 2 = Difícil (1-10)
 function setDifficulty(nivel) {
 difficulty = nivel;
-// Actualizar botones activos
 document.getElementById("btn-easy").classList.toggle("active", nivel === 1);
 document.getElementById("btn-hard").classList.toggle("active", nivel === 2);
 reiniciarJuego();
@@ -152,20 +155,20 @@ reiniciarJuego();
 function generarPregunta() {
 answered = false;
 document.getElementById("result").innerHTML = "";
-let max = difficulty === 1 ? 5 : 10;
-const a = Math.floor(Math.random() * max) + 1;
-const b = Math.floor(Math.random() * max) + 1;
+let maxTabla = difficulty === 1 ? 5 : 10;
+let maxRespuesta = difficulty === 1 ? 50 : 100;
+const a = Math.floor(Math.random() * maxTabla) + 1;
+const b = Math.floor(Math.random() * maxTabla) + 1;
 correctAnswer = a * b;
 document.getElementById("question").textContent = `¿Cuánto es ${a} × ${b}?`;
-// Generar 6 opciones
+// Generar 6 opciones (respuestas entre 1 y maxRespuesta)
 let opciones = [correctAnswer];
 while (opciones.length < 6) {
-let falsa = Math.floor(Math.random() * (max * max + 30)) + 1;
-if (falsa > 0 && !opciones.includes(falsa)) {
+let falsa = Math.floor(Math.random() * maxRespuesta) + 1;
+if (falsa !== correctAnswer && !opciones.includes(falsa)) {
 opciones.push(falsa);
 }
 }
-// Mezclar
 opciones = opciones.sort(() => Math.random() - 0.5);
 const optionsDiv = document.getElementById("options");
 optionsDiv.innerHTML = "";
@@ -198,21 +201,20 @@ btn.classList.add("correct");
 }
 });
 }
-// Auto-avanzar después de 1.2 segundos
+// Auto-avanzar después de 1.1 segundos (más fluido)
 setTimeout(() => {
 if (currentQuestion < totalQuestions) {
 generarPregunta();
 } else {
-// Pantalla final
 const porcentaje = Math.round((score / totalQuestions) * 100);
 document.getElementById("question").innerHTML = `
 <h2>¡JUEGO TERMINADO!</h2>
-<p style="font-size:2.6em; margin:25px 0;">${score} / ${totalQuestions}</p>
-<p style="font-size:1.7em;">${porcentaje >= 80 ? "¡EXCELENTE! 🔥" : porcentaje >= 60 ? "¡MUY BIEN! 👍" : "¡Sigue practicando!"}</p>
+<p style="font-size:2.4em; margin:20px 0;">${score} / ${totalQuestions}</p>
+<p style="font-size:1.6em;">${porcentaje >= 80 ? "¡EXCELENTE! 🔥" : porcentaje >= 60 ? "¡MUY BIEN! 👍" : "¡Sigue practicando!"}</p>
 `;
 document.getElementById("options").innerHTML = "";
 }
-}, 1200);
+}, 1100);
 }
 function reiniciarJuego() {
 score = 0;
@@ -221,7 +223,7 @@ document.getElementById("score").textContent = "0";
 document.getElementById("total").textContent = "0";
 generarPregunta();
 }
-// Iniciar el juego
+// Iniciar
 window.onload = generarPregunta;
 </script>
 </body></html>
